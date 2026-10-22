@@ -388,10 +388,13 @@
     h1.name{font-size:clamp(42px,12vw,68px);overflow-wrap:break-word}
     .sec-head{grid-template-columns:auto 1fr;gap:12px}
     .sec-head .e{display:none}
-    /* 节与节之间加可见分界：留白 + 细线，避免手机上一整片糊在一起 */
-    .sec{padding-top:42px;margin-top:42px;border-top:1px solid var(--line)}
-    #edu{padding-top:36px;margin-top:0}
-    .sec-head{margin-bottom:26px}
+    /* 节分隔改用浅色标题带：整块底色承担分区，只在标题下方留一条黑线，
+       不再用"细线夹大字标题"那种生硬的两道杠。
+       出血宽度必须跟随容器内边距（--pad：980 断点 24px / 560 断点 20px），
+       写死 -24px 会在 20px 断点上左右各超出 4px，被 main 的 overflow-x 裁掉。 */
+    .sec{padding-top:36px;padding-bottom:34px;margin-top:0;border-top:0;--pad:24px}
+    #edu{padding-top:24px}
+    .sec-head{background:var(--paper-3);margin:0 calc(var(--pad) * -1) 26px;padding:18px var(--pad) 14px;border-top:0;border-bottom:1px solid var(--ink)}
     .sec-head h2{line-height:1.25}
     .sec-head h2{overflow-wrap:break-word}
     .edu-grid{grid-template-columns:1fr;gap:24px}
@@ -416,6 +419,8 @@
   }
   @media (max-width:560px){
     .wrap{padding:0 20px}
+    /* 容器内边距降到 20px，标题带的出血宽度同步跟随，否则会超出 4px */
+    .sec{--pad:20px}
     .hobby-grid{grid-template-columns:1fr}
     .f-grid{grid-template-columns:1fr}
     .tags li{font-size:10px;padding:6px 10px}
