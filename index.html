@@ -21,10 +21,10 @@
     --sans:'Mona Sans','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
     --nav-h:68px;
     --maxw:1320px;
-    --ai1:url('个人照片/个人AI形象.png');
-    --ai2:url('个人照片/形象衬衫.png');
-    --ai3:url('个人照片/形象围巾.png');
-    --ai4:url('个人照片/形象墨镜.png');
+    --ai1:url('assets/media/ai-1.jpg');
+    --ai2:url('assets/media/ai-2.jpg');
+    --ai3:url('assets/media/ai-3.jpg');
+    --ai4:url('assets/media/ai-4.jpg');
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -359,9 +359,18 @@
     .wrap{padding:0 24px}
     /* 菜单改绝对定位：.nav 的 backdrop-filter 会创建 containing block，
        使 fixed 子元素不再相对视口定位（Safari 上表现为菜单错位、点不到） */
-    .menu{position:absolute;left:0;right:0;top:100%;z-index:20;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:8px 18px 16px;transform:translateY(-110%);transition:transform .35s cubic-bezier(.16,1,.3,1);margin-left:0}
-    .menu.open{transform:translateY(0)}
-    .menu a{padding:13px 6px;font-size:15px;border-bottom:1px solid var(--line);border-radius:0;min-height:44px}
+    /* 移动端菜单：贴住视口的覆盖层，只用 fixed + opacity 控制显隐，
+       不再依赖父容器的 translate 计算，避免手机上展开后不可见 */
+    .menu{position:fixed;top:var(--nav-h);left:0;right:0;
+      max-height:calc(100vh - var(--nav-h));max-height:calc(100dvh - var(--nav-h));
+      overflow-y:auto;flex-direction:column;gap:0;margin:0;
+      background:var(--paper);border-bottom:1px solid var(--ink);
+      padding:6px 0 14px;z-index:140;
+      opacity:0;visibility:hidden;transform:translateY(-8px);
+      transition:opacity .26s ease,transform .26s cubic-bezier(.16,1,.3,1),visibility .26s;
+      box-shadow:0 18px 40px rgba(13,13,12,.14)}
+    .menu.open{opacity:1;visibility:visible;transform:none}
+    .menu a{padding:15px 24px;font-size:15.5px;border-bottom:1px solid var(--line);border-radius:0;min-height:52px}
     .menu a.on::after{display:none}
     .menu a.on{color:var(--accent);background:transparent}
     .nav-av{width:30px;height:30px}
@@ -379,6 +388,11 @@
     h1.name{font-size:clamp(42px,12vw,68px);overflow-wrap:break-word}
     .sec-head{grid-template-columns:auto 1fr;gap:12px}
     .sec-head .e{display:none}
+    /* 节与节之间加可见分界：留白 + 细线，避免手机上一整片糊在一起 */
+    .sec{padding-top:42px;margin-top:42px;border-top:1px solid var(--line)}
+    #edu{padding-top:36px;margin-top:0}
+    .sec-head{margin-bottom:26px}
+    .sec-head h2{line-height:1.25}
     .sec-head h2{overflow-wrap:break-word}
     .edu-grid{grid-template-columns:1fr;gap:24px}
     .edu-row{grid-template-columns:1fr;gap:2px;padding:12px 0}
@@ -570,14 +584,14 @@
         <span class="tl-dot"></span>
         <button class="tl-head" aria-expanded="false">
           <span class="tl-award" data-i18n="w1.award">国家级一等奖</span>
-          <h3 data-i18n="w1.h3">RCEP 市场开拓赛道 · 团队负责人</h3>
+          <h3 data-i18n="w1.h3">RCEP 市场开拓赛道 · 团队成员</h3>
           <span class="tl-sum" data-i18n="w1.sum">以 HS 编码 <strong>85076000</strong> 为口径测算市场份额，选定澳大利亚为首站。</span>
           <span class="tl-cue"><span data-i18n="w.cue">展开详情</span> <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1V8M1 4.5H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
         </button>
         <div class="tl-detail"><div>
           <div class="tl-inner">
             <p data-i18n="w1.p1">以 HS 编码 <b>85076000</b>（锂离子蓄电池）为口径，从 ITC Trademap 与 UN Comtrade 测算中国在各国进口市场的份额：<b>韩国 92.77%、印尼 86.32%、澳大利亚 58.22%</b>。</p>
-            <p data-i18n="w1.p2">对照 RCEP 关税承诺表比对五国税率与降税路径，结合份额、增速与竞争对手本土产能，选定<b>澳大利亚</b>为首站市场。合撰 <b>43 页</b>报告，负责数据整理与市场筛选两章，结论获评委采纳。</p>
+            <p data-i18n="w1.p2">对照 RCEP 关税承诺表比对五国税率与降税路径，结合份额、增速与竞争对手本土产能，选定<b>澳大利亚</b>为首站市场。合撰 <b>43 页</b>报告，执笔数据整理与市场筛选两章，结论获评委采纳。</p>
             <div class="tl-facts" data-i18n="w1.facts">
               <div><span class="n">92.77%</span><span class="l">韩国份额</span></div>
               <div><span class="n">43 页</span><span class="l">报告篇幅</span></div>
@@ -948,10 +962,10 @@
     'w.cue': 'Details',
 
     'w1.award': 'National First Prize',
-    'w1.h3': 'RCEP Market Development Track · Team Lead',
+    'w1.h3': 'RCEP Market Development Track · Team Member',
     'w1.sum': 'Measured market share using HS code <strong>85076000</strong> and picked Australia as the first market.',
     'w1.p1': 'Using HS code <b>85076000</b> (lithium-ion batteries), calculated the Chinese share of each import market from ITC Trademap and UN Comtrade: <b>Korea 92.77%, Indonesia 86.32%, Australia 58.22%</b>.',
-    'w1.p2': 'Compared tariff schedules and reduction paths across five RCEP members, then weighed share, growth and local competitor capacity to choose <b>Australia</b>. Co-authored a <b>43-page</b> report, owning the data and market-screening chapters. The conclusion was adopted by the judges.',
+    'w1.p2': 'Compared tariff schedules and reduction paths across five RCEP members, then weighed share, growth and local competitor capacity to choose <b>Australia</b>. Co-authored a <b>43-page</b> report, writing the data and market-screening chapters. The conclusion was adopted by the judges.',
     'w1.facts': '<div><span class="n">92.77%</span><span class="l">Korea share</span></div><div><span class="n">43 pp</span><span class="l">Report</span></div><div><span class="n">National 1st</span><span class="l">Result</span></div>',
 
     'w2.award': 'National Third Prize',
