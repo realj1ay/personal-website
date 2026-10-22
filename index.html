@@ -27,7 +27,7 @@
     --ai4:url('个人照片/形象墨镜.png');
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;overflow-x:clip}
+  html{scroll-behavior:smooth}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
@@ -355,7 +355,8 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:980px){
     :root{--nav-h:60px}
-    .nav{padding:0 18px;gap:10px}
+    .nav{padding:0 18px;gap:10px;backdrop-filter:none;background:var(--paper)}
+    .wrap{padding:0 24px}
     /* 菜单改绝对定位：.nav 的 backdrop-filter 会创建 containing block，
        使 fixed 子元素不再相对视口定位（Safari 上表现为菜单错位、点不到） */
     .menu{position:absolute;left:0;right:0;top:100%;z-index:20;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--ink);padding:8px 18px 16px;transform:translateY(-110%);transition:transform .35s cubic-bezier(.16,1,.3,1);margin-left:0}
@@ -365,14 +366,15 @@
     .menu a.on{color:var(--accent);background:transparent}
     .nav-av{width:30px;height:30px}
     .menu a.on .nav-av{width:34px;height:34px;box-shadow:none}
-    .burger{display:flex;width:44px;height:44px}
-    .lang-btn{min-height:44px;padding:0 12px}
+    .burger{display:flex;width:44px;height:44px;margin-left:2px}
+    .lang-btn{min-height:40px;padding:0 9px;font-size:10px}
     .resume{margin-left:auto}
-    .resume-btn{font-size:10.5px;padding:0 13px;min-height:44px}
+    .resume-btn{font-size:10px;padding:0 10px;min-height:40px}
     .logo .wm{display:none}
     .hero{min-height:auto;padding-top:22px;padding-bottom:104px}
     .hero-grid{grid-template-columns:1fr;gap:26px}
-    .hero-fig{order:-1;max-width:400px;margin:0 auto}
+    .hero-fig{order:-1;width:100%;max-width:400px;margin:0 auto}
+    .hero-fig::before{left:16px;right:-6px;top:16px;bottom:4px}
     .hero-fig .frame{aspect-ratio:4/5}
     h1.name{font-size:clamp(42px,12vw,68px);overflow-wrap:break-word}
     .sec-head{grid-template-columns:auto 1fr;gap:12px}
@@ -399,16 +401,22 @@
     .fab{right:14px;bottom:16px;padding:12px 16px;font-size:11px}
   }
   @media (max-width:560px){
+    .wrap{padding:0 20px}
     .hobby-grid{grid-template-columns:1fr}
     .f-grid{grid-template-columns:1fr}
     .tags li{font-size:10px;padding:6px 10px}
     h1.name{font-size:clamp(38px,11vw,56px)}
     .sec-head h2{font-size:clamp(21px,6.4vw,28px)}
-    .tl-wrap{padding-left:54px}
-    .tl-axis{left:28px}
-    .tl-year{margin-left:-54px}
-    .tl-date{left:-54px;width:32px}
-    .tl-dot{left:-26px}
+    /* 窄屏时间轴：去掉轴线，日期改成标题上方的独立标签，避免与圆点/年份重叠 */
+    .tl-wrap{padding-left:0}
+    .tl-axis,.tl-dot{display:none}
+    .tl-year{margin-left:0;margin-bottom:12px}
+    .tl-year span{font-size:22px}
+    .tl-date{position:static;left:auto;width:auto;text-align:left;margin-bottom:5px;padding-left:11px;font-size:10px;letter-spacing:.14em}
+    .tl-head{padding:9px 0 10px 11px}
+    .tl-inner{padding:10px 0 14px 11px}
+    .fab{font-size:10.5px;padding:10px 15px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+    .fab.top{padding:11px}
   }
   @media (hover:none){
     .hero-fig img{filter:grayscale(0) contrast(1.02)}
